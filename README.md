@@ -3,11 +3,12 @@
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/jothepro/doxygen-awesome-css)](https://github.com/jothepro/doxygen-awesome-css/releases/latest)
 [![GitHub](https://img.shields.io/github/license/jothepro/doxygen-awesome-css)](https://github.com/jothepro/doxygen-awesome-css/blob/main/LICENSE)
 
-<div style="margin: -1% -4.4%;">
+<div style="filter: drop-shadow(0px 3px 15px rgba(0,0,0,0.25))">
 
 [![Screenshot of Doxygen Awesome CSS](img/screenshot.png)](https://jothepro.github.io/doxygen-awesome-css/)
 
 </div>
+<br>
 
 **Doxygen Awesome** is a custom **CSS theme for doxygen** html-documentation with lots of customization parameters.
 
@@ -24,7 +25,7 @@ This theme is an attemt to update the visuals of doxygen without changing it's o
 - 🧩 No changes to the HTML structure of Doxygen required
 - 📱 Improved mobile usability
 - 🌘 Dark mode support!
-- 🥇 Works best with **doxygen 1.9.1**
+- 🥇 Works best with **doxygen 1.9.1** or **1.9.2**
  
 ## Installation
 
@@ -33,7 +34,7 @@ Copy the `css` files from this repository into your project or add this reposito
 ```bash
 git submodule add https://github.com/jothepro/doxygen-awesome-css.git
 cd doxygen-awesome-css
-git checkout v1.5.0
+git checkout v1.6.1
 ```
 
 Then make the option `HTML_EXTRA_STYLESHEET` in your Doxyfile point to the `css` files:
@@ -103,14 +104,31 @@ It requires customizations in both the header & footer html template.
    ```html
            <!-- ... -->
            <script type="text/javascript">
-               $(document).ready(function(){
-                   toggleButton = document.createElement('doxygen-awesome-dark-mode-toggle')
-                   toggleButton.title = "Toggle Light/Dark Mode"
-                   document.getElementById("MSearchBox").parentNode.appendChild(toggleButton)
+               // script for doxygen 1.9.1
+               $(function() {
+                   $(document).ready(function(){
+                      toggleButton = document.createElement('doxygen-awesome-dark-mode-toggle')
+                      toggleButton.title = "Toggle Light/Dark Mode"
+                      document.getElementById("MSearchBox").parentNode.appendChild(toggleButton)
+                  })
                })
            </script>
        </body>
    </html>
+   ```
+   **Attention**: In Doxygen 1.9.2 the searchbox and it's siblings are deleted on every resize, which is why the toggle button has to be re-added every time:
+   ```js
+   $(function() {
+     toggleButton = document.createElement('doxygen-awesome-dark-mode-toggle')
+     toggleButton.title = "Toggle Light/Dark Mode"
+
+     $(document).ready(function(){
+       document.getElementById("MSearchBox").parentNode.appendChild(toggleButton)
+     })
+     $(window).resize(function(){
+       document.getElementById("MSearchBox").parentNode.appendChild(toggleButton)
+     })
+   })
    ```
 
 ## Examples
@@ -165,7 +183,7 @@ html.dark-mode {
 | `--border-radius-small`           | `4px`                                                       |                                                             |
 | `--border-radius-medium`          | `6px`                                                       |                                                             |
 | `--border-radius-large`           | `8px`                                                       |                                                             |
-| **Content Width**:<br>The content is centered and constraint in it's width. To make the content fill the whole page, set the following variable to `auto`.  |||
+| **Content Width**:<br>The content is centered and constrained in its width. To make the content fill the whole page, set the following variable to `auto`.  |||
 | `--content-maxwidth`              | `1000px`                                                     |                                                             |
 | **Code Fragment Colors**:<br>Color-Scheme of multiline codeblocks                                                                                           |||
 | `--fragment-background`           | <span style="background:#282c34;color:white">#282c34</span> |                                                             |
